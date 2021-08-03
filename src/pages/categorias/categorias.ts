@@ -35,10 +35,7 @@ export class CategoriasPage {
       this.itens = response;  
       //console.log(response);
       },
-      error => {
-        console.log(error)
-      }
-    );  
+      error => {});  
   }
 
  /* f(response: any){
