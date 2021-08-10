@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
 import { StorageService } from '../services/storage.service';
-import { AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(public storage : StorageService, public alerCtrl: AlertController){
+    constructor(public storage : StorageService, public alertCtrl: AlertController){
 
     }
 
@@ -37,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     break;
 
                 default:
-                    this.handleDefautEror(errorObj);
+                    this.handleDefaultEror(errorObj);
                     break;
             }
 
@@ -49,8 +49,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.storage.setLocalUser(null);
     }
 
-    handle401(){
-        let alert = this.alerCtrl.create({
+    handle401() {
+        let alert = this.alertCtrl.create({
             title: 'Erro 401: falha de autenticação',
             message: 'Email ou senha incorretos',
             enableBackdropDismiss: false,
@@ -62,10 +62,10 @@ export class ErrorInterceptor implements HttpInterceptor {
         });
         alert.present();
     }
-
-    handleDefautEror(errorObj){
-        let alert = this.alerCtrl.create({
-            title: 'Error ' + errorObj.status + ': ' + errorObj.error,
+    
+    handleDefaultEror(errorObj) {
+        let alert = this.alertCtrl.create({
+            title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
             message: errorObj.message,
             enableBackdropDismiss: false,
             buttons: [
@@ -74,8 +74,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
             ]
         });
-        
-        alert.present();
+        alert.present();        
     }
 
 }
